@@ -14,7 +14,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 cargo = "0.68"
-cargo-util = "0.1"
+cargo-util = "0.2"
 curl = "0.4.26"
 docopt = "1.1.0"
 env_logger = { version = "0.9", default-features = false }
