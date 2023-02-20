@@ -9,16 +9,16 @@ repository = "https://github.com/k0nserv/cargo-edit-locally"
 description = """
 A Cargo subcommand to edit dependencies locally via `[replace]`
 """
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 anyhow = "1"
-cargo = "0.56.0"
+cargo = "0.68"
 cargo-util = "0.1"
 curl = "0.4.26"
 docopt = "1.1.0"
 env_logger = { version = "0.9", default-features = false }
-git2 = "0.13"
+git2 = "0.16"
 pathdiff = "0.2"
 serde = { version = "1.0.104", features = ['derive'] }
 serde_json = "1.0.48"

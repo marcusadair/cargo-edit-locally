@@ -1,5 +1,6 @@
+use std::task::Poll;
 use anyhow::{bail, format_err, Context, Result};
-use cargo::core::Dependency;
+use cargo::core::{Dependency, QueryKind, Source};
 use cargo::core::{GitReference, SourceId, Workspace};
 use cargo::ops;
 use cargo::util::important_paths::find_root_manifest_for_wd;
@@ -129,12 +130,20 @@ fn real_main(options: Options, config: &mut Config) -> Result<()> {
     let mut source = replace_with.load(config, &Default::default())?;
     {
         let _lock = config.acquire_package_cache_lock()?;
-        source.update()?;
+        source.invalidate_cache();
     }
 
     let req = format!("={}", to_replace.version().to_string());
     let dependency = Dependency::parse(to_replace.name(), Some(&req), replace_with)?;
-    let candidates = source.query_vec(&dependency)?;
+    let candidates = loop {
+        match source.query_vec(&dependency, QueryKind::Exact)? {
+            Poll::Ready(deps) => break deps,
+            Poll::Pending => {
+                let _lock = config.acquire_package_cache_lock()?;
+                source.block_until_ready()?
+            },
+        }
+    };
     if candidates.len() == 0 {
         let mut msg = format!(
             "failed to find `{} v{}` inside of `{}`\n",

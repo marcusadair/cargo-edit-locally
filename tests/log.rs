@@ -228,8 +228,10 @@ fn wrong_version() {
                 .unwrap();
     assert!(!out.status.success());
     let err = String::from_utf8(out.stderr).unwrap();
-    assert!(err.contains("failed to find `log v0.3.5` inside of"));
-    assert!(err.contains("perhaps a different branch/tag is needed?"));
+    assert!(err.contains("failed to find `log v0.3.5` inside of"),
+            "Command error: {}\n----end of command error---", err);
+    assert!(err.contains("perhaps a different branch/tag is needed?"),
+            "Command error: {}\n----end of command error---", err);
 }
 
 #[test]
