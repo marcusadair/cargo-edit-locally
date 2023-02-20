@@ -22,7 +22,7 @@ git2 = "0.16"
 pathdiff = "0.2"
 serde = { version = "1.0.152", features = ['derive'] }
 serde_json = "1.0.93"
-toml = "0.5.6"
+toml = "0.7.2"
 url = "*"
 openssl = { version = '0.10.28', optional = true }
 
