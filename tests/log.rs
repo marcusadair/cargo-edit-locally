@@ -3,7 +3,7 @@ use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 use std::process::Command;
-use std::sync::atomic::{AtomicUsize, Ordering, ATOMIC_USIZE_INIT};
+use std::sync::atomic::{AtomicUsize, Ordering};
 
 fn edit_locally(dir: &Path, krate: &str) -> Command {
     let mut me = env::current_exe().unwrap();
@@ -19,7 +19,7 @@ fn edit_locally(dir: &Path, krate: &str) -> Command {
     return cmd
 }
 
-static CNT: AtomicUsize = ATOMIC_USIZE_INIT;
+static CNT: AtomicUsize = AtomicUsize::new(0);
 
 fn dir() -> PathBuf {
     let i = CNT.fetch_add(1, Ordering::SeqCst);
