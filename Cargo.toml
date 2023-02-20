@@ -17,7 +17,7 @@ cargo = "0.68"
 cargo-util = "0.2"
 curl = "0.4.26"
 docopt = "1.1.0"
-env_logger = { version = "0.9", default-features = false }
+env_logger = { version = "0.10", default-features = false }
 git2 = "0.16"
 pathdiff = "0.2"
 serde = { version = "1.0.104", features = ['derive'] }
